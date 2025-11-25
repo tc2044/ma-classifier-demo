@@ -70,11 +70,13 @@ def main():
     st.header("🖼️ Platform Features")
     
     # Display screenshot
-    st.image("Screenshot 2025-11-25 at 1.10.43 PM.png", 
-             caption="M&A Classifier Dashboard", 
-             use_container_width=True)
-    
-    st.markdown("")  # Add spacing
+    try:
+        st.image("Screenshot 2025-11-25 at 1.10.43 PM.png", 
+                 caption="M&A Classifier Dashboard", 
+                 use_container_width=True)
+        st.markdown("")  # Add spacing
+    except Exception as e:
+        st.warning("Screenshot not available")
     
     col1, col2 = st.columns(2)
     
