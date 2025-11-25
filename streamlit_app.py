@@ -21,11 +21,7 @@ def main():
     
     # Sidebar navigation hint
     with st.sidebar:
-        st.info("👉 **Click 'Interactive Demo' below to try the classifier!**")
-        st.markdown("---")
-        st.markdown("### Pages")
-        st.page_link("streamlit_app.py", label="🏠 Home")
-        st.page_link("pages/1_Interactive_Demo.py", label="🔬 Interactive Demo")
+        st.info("👉 **Use the 'Pages' navigation to try the Interactive Demo!**")
         st.markdown("---")
         st.markdown("### About")
         st.caption("This platform uses AI to identify M&A transactions from corporate announcements.")
