@@ -1,6 +1,6 @@
 # 🔍 M&A Transaction Classifier - Live Demo
 
-An intelligent tool that classifies financial announcements as M&A transactions using AWS Lambda + Bedrock Claude.
+An intelligent tool that classifies corporate announcements as M&A transactions using AWS Lambda + Bedrock Claude.
 
 **Live Demo**: [Coming Soon - Deploy to Streamlit Cloud]
 
