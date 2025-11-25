@@ -1,6 +1,6 @@
 # 🔍 M&A Transaction Classifier - Live Demo
 
-An intelligent tool that classifies SGX announcements as M&A transactions using AWS Lambda + Bedrock Claude.
+An intelligent tool that classifies financial announcements as M&A transactions using AWS Lambda + Bedrock Claude.
 
 **Live Demo**: [Coming Soon - Deploy to Streamlit Cloud]
 
@@ -242,7 +242,7 @@ This is a **demonstration project** built for:
 
 - **Live Demo**: [Deploy to see it live!]
 - **Backend Architecture**: Private (AWS Lambda + Bedrock)
-- **Related Project**: SGX M&A Classifier (private repo)
+- **Related Project**: M&A Classifier (private repo)
 
 ---
 
