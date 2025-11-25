@@ -25,34 +25,62 @@ API_ENDPOINT = st.secrets.get("API_ENDPOINT", "https://b6svh4pxaw2nr5pr3ndcbnhch
 
 SAMPLE_ANNOUNCEMENTS = [
     {
-        "title": "KKR Acquisition - Large PE Deal",
-        "text": """KKR & Co. Inc. announces the acquisition of 80% stake in ABC Technology Ltd 
-        for a total consideration of USD 200 million. The transaction represents a strategic 
-        investment in the Southeast Asian technology sector. Goldman Sachs is acting as 
-        financial adviser to KKR. The acquisition is expected to complete in Q1 2026."""
+        "title": "Vista Equity Partners to Acquire Finastra - $8.4 Billion LBO",
+        "text": """Vista Equity Partners has entered into a definitive agreement to acquire Finastra, 
+        a leading global provider of financial software, from existing shareholders including Thoma Bravo 
+        and funds managed by BC Partners. The transaction values Finastra at approximately $8.4 billion 
+        enterprise value. The acquisition will be financed through a combination of equity from Vista Equity 
+        Partners funds and committed debt financing arranged by Bank of America, Goldman Sachs, and JPMorgan. 
+        Kirkland & Ellis LLP is serving as legal advisor to Vista Equity Partners. The transaction is expected 
+        to close in Q2 2026, subject to customary regulatory approvals."""
     },
     {
-        "title": "Company XYZ - Quarterly Results (Should Reject)",
-        "text": """Company XYZ Limited announces its unaudited financial results for Q3 2025. 
-        Revenue increased 15% year-over-year to $50 million. Net profit was $8 million, 
-        up from $6 million in the prior year quarter. The Board is pleased with the results."""
+        "title": "Microsoft Reports Strong Q4 Earnings - $65B Revenue (Should Reject)",
+        "text": """Microsoft Corporation today announced financial results for the fourth quarter ended 
+        June 30, 2025. Revenue was $65.0 billion and increased 15% (up 16% in constant currency). 
+        Operating income was $29.2 billion and increased 18%. Net income was $23.9 billion and 
+        increased 19%. Diluted earnings per share was $3.25 and increased 20%. "We delivered strong 
+        results in the fourth quarter," said Satya Nadella, chairman and chief executive officer of Microsoft. 
+        The Board of Directors declared a quarterly dividend of $0.75 per share."""
     },
     {
-        "title": "Property Sale Announcement (Should Reject)",
-        "text": """ABC Corporation announces the disposal of its commercial property located at 
-        123 Main Street for a consideration of $12 million. The property sale is part of 
-        the company's asset optimization strategy."""
+        "title": "REA Group Issues $500M Senior Notes - Refinancing (Should Reject)",
+        "text": """REA Group Limited announced today the successful pricing of A$500 million 
+        aggregate principal amount of 5.25% senior unsecured notes due 2030. The notes were priced 
+        at par and the proceeds will be used primarily to refinance existing debt facilities and 
+        for general corporate purposes. The offering is expected to settle on November 30, 2025. 
+        Macquarie Capital and UBS acted as joint lead managers for the offering. The notes have been 
+        rated BBB+ by S&P Global Ratings."""
     },
     {
-        "title": "Strategic Investment - Mid-Size Deal",
-        "text": """DEF Ltd announces a proposed strategic investment to acquire 65% of the issued 
-        share capital of XYZ Pte Ltd for SGD 85 million in cash. The acquisition will expand 
-        DEF's presence in the Asian market. HSBC is advising on the transaction."""
+        "title": "Apollo Leads $1.2B Buyout of Global Healthcare IT Provider",
+        "text": """Apollo Global Management, Inc. announced today that funds managed by its affiliates 
+        have entered into a definitive agreement to acquire Syntellis Performance Solutions, a leading 
+        provider of enterprise performance management software for healthcare organizations, from 
+        private equity firm Charlesbank Capital Partners. The transaction values Syntellis at 
+        approximately $1.2 billion. The acquisition will be financed through Apollo funds' equity 
+        commitments and $750 million in senior secured credit facilities provided by Morgan Stanley 
+        and Credit Suisse. Cleary Gottlieb Steen & Hamilton LLP is legal counsel to Apollo. 
+        Closing is expected in Q1 2026, subject to regulatory approvals and customary closing conditions."""
     },
     {
-        "title": "Small Deal - Below Threshold (Should Reject)",
-        "text": """Startup Inc. announces the acquisition of Tech Co. for a total consideration 
-        of USD 3 million. The acquisition will strengthen Startup's product capabilities."""
+        "title": "Blackstone Acquires Industrial Portfolio - Real Estate (Should Reject)",
+        "text": """Blackstone Real Estate Income Trust, Inc. (BREIT) today announced the acquisition 
+        of a 2.5 million square foot industrial portfolio in the Sun Belt region for approximately 
+        $425 million. The portfolio consists of 12 state-of-the-art logistics facilities across 
+        Texas and Arizona, with an average occupancy rate of 97%. The properties are strategically 
+        located near major transportation hubs. Wells Fargo Securities acted as financial advisor. 
+        This acquisition enhances BREIT's industrial real estate portfolio."""
+    },
+    {
+        "title": "Brookfield Infrastructure Closes $850M Acquisition of Data Center Assets",
+        "text": """Brookfield Infrastructure Partners L.P. announced today the completion of its acquisition 
+        of a portfolio of hyperscale data center assets from Digital Realty Trust for total consideration 
+        of $850 million. The transaction includes four facilities totaling 450,000 square feet across 
+        key markets in Northern Virginia and Silicon Valley. The acquisition was financed through 
+        $300 million of equity from Brookfield's infrastructure funds and $550 million in project-level 
+        debt provided by a syndicate led by HSBC and Citi. Paul Hastings LLP served as legal advisor. 
+        This strategic acquisition expands Brookfield's digital infrastructure platform."""
     }
 ]
 
