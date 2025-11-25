@@ -22,9 +22,10 @@ with st.sidebar:
     st.info("Use the navigation above to switch between pages")
     st.markdown("---")
     st.markdown("### ℹ️ About")
-    st.caption("AI-powered M&A transaction classifier")
+    st.caption("AI-powered M&A & corporate finance classifier")
     st.caption("**Tech Stack:** AWS Lambda + Bedrock Claude")
     st.caption("**Accuracy:** 95%+")
+    st.caption("**Detects:** M&A, LBOs, Debt Financing")
 
 st.title("🔍 M&A Transaction Classifier")
 st.markdown("**AI-Powered Deal Flow Intelligence**")
@@ -35,10 +36,10 @@ st.markdown("---")
 st.header("📊 Problem Statement")
 st.markdown("""
 Corporate announcements flood the market daily, making it challenging for:
-- **Investment professionals** to identify genuine M&A opportunities
-- **Market analysts** to track deal flow in real-time
+- **Investment professionals** to identify genuine M&A opportunities and financing transactions
+- **Market analysts** to track deal flow and leverage finance activity in real-time
 - **Corporate development teams** to monitor competitive M&A activity
-- **News aggregators** to filter relevant transactions
+- **News aggregators** to filter relevant corporate finance transactions
 
 **The Challenge**: Manually reviewing hundreds of announcements daily is time-consuming 
 and prone to missing critical deals hidden in complex corporate language.
@@ -50,13 +51,14 @@ st.markdown("---")
 st.header("💡 Solution")
 st.markdown("""
 Our AI-powered classifier automatically analyzes corporate announcements and identifies 
-genuine M&A transactions with **95%+ accuracy**, processing each announcement in under 3 seconds.
+genuine M&A transactions, leverage finance, debt issuances, and other corporate finance activities 
+with **95%+ accuracy**, processing each announcement in under 3 seconds.
 
 **How It Works**:
-1. **Smart Pre-filters** - Reject 60-70% of non-M&A announcements instantly
-2. **Feature Extraction** - Parse deal size, parties, transaction type
+1. **Smart Pre-filters** - Reject 60-70% of non-relevant announcements instantly
+2. **Feature Extraction** - Parse deal size, parties, transaction type, financing structure
 3. **Rule-based Logic** - Apply domain expertise for clear-cut cases
-4. **AI Fallback** - AWS Bedrock Claude handles edge cases
+4. **AI Fallback** - AWS Bedrock Claude handles edge cases and complex structures
 
 **Technology Stack**:
 - ⚡ **AWS Lambda** - Serverless compute
@@ -118,13 +120,16 @@ st.header("✅ Classification Criteria")
 col1, col2 = st.columns(2)
 
 with col1:
-    st.markdown("**Qualifies as M&A**:")
+    st.markdown("**Qualifies as M&A / Corporate Finance**:")
     st.success("""
     - Acquisitions, mergers, takeovers
     - Strategic investments >$5M
     - Change of control transactions
     - Joint ventures with equity stakes
     - Asset acquisitions (substantial)
+    - Leverage finance / LBO transactions
+    - Debt issuance for acquisitions
+    - Corporate financing activities
     """)
 
 with col2:
@@ -132,9 +137,10 @@ with col2:
     st.warning("""
     - Financial results/earnings
     - Property transactions
-    - Debt/bond issuance
+    - General working capital debt
     - Small deals (<$5M)
     - Procedural/corporate updates
+    - Refinancing only (no M&A component)
     """)
 
 st.markdown("---")
