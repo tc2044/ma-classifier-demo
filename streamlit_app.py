@@ -195,7 +195,7 @@ def main():
     with st.sidebar:
         st.header("ℹ️ About")
         st.markdown("""
-        This tool classifies SGX announcements as M&A transactions or not.
+        This tool classifies corporate announcements as M&A transactions or not.
         
         **Processing Flow**:
         1. Pre-filters (60-70% rejected)
@@ -263,7 +263,7 @@ def main():
         uploaded_file = st.file_uploader(
             "Choose a PDF file",
             type=['pdf'],
-            help="Upload an SGX announcement PDF (max 7 MB)"
+            help="Upload a corporate announcement PDF (max 7 MB)"
         )
         
         if uploaded_file:
