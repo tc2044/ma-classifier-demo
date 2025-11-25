@@ -27,8 +27,8 @@ with st.sidebar:
     st.caption("**Accuracy:** 95%+")
     st.caption("**Detects:** M&A, LBOs, Debt Financing")
 
-st.title("🔍 M&A Transaction Classifier")
-st.markdown("**AI-Powered Deal Flow Intelligence**")
+st.title("🤖 AI-Powered Corporate Finance Intelligence")
+st.markdown("**Automated M&A, LBO & Debt Transaction Classification**")
 
 st.markdown("---")
 
