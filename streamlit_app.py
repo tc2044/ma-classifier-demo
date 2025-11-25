@@ -19,6 +19,14 @@ def main():
         layout="wide"
     )
     
+    # Sidebar navigation hint
+    with st.sidebar:
+        st.info("👉 **Navigate to 'Interactive Demo' to try the classifier!**")
+        st.markdown("---")
+        st.markdown("### About")
+        st.caption("This platform uses AI to identify M&A transactions from corporate announcements.")
+        st.caption("**Tech Stack:** AWS Lambda + Bedrock Claude 3 Haiku")
+    
     st.title("🔍 M&A Transaction Classifier")
     st.markdown("**AI-Powered Deal Flow Intelligence**")
     
