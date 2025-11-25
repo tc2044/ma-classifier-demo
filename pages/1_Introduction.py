@@ -74,7 +74,7 @@ st.header("🖼️ Platform Features")
 try:
     # Get the directory of the current file and go up one level
     current_dir = Path(__file__).parent.parent
-    image_path = current_dir / "Screenshot 2025-11-25 at 1.10.43 PM.png"
+    image_path = current_dir / "screenshot-dashboard.png"
     
     if image_path.exists():
         st.image(str(image_path), 
