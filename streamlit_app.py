@@ -15,6 +15,16 @@ def main():
         layout="wide"
     )
     
+    # Sidebar
+    with st.sidebar:
+        st.markdown("### 📍 Navigation")
+        st.info("Use the navigation above to switch between pages")
+        st.markdown("---")
+        st.markdown("### ℹ️ About")
+        st.caption("AI-powered M&A transaction classifier")
+        st.caption("**Tech Stack:** AWS Lambda + Bedrock Claude")
+        st.caption("**Accuracy:** 95%+")
+    
     st.title("🔍 M&A Transaction Classifier")
     st.markdown("**AI-Powered Deal Flow Intelligence**")
     
