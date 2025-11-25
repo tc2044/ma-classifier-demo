@@ -127,17 +127,23 @@ def main():
     st.markdown("---")
     
     # Call to action
-    st.header("� Try It Now")
+    st.header("🚀 Try It Now")
     st.markdown("""
-    Ready to experience the classifier? Use the **Interactive Demo** in the sidebar to:
+    Ready to experience the classifier? Click the button below to try the Interactive Demo:
+    """)
+    
+    # Direct navigation button
+    if st.button("🔬 Launch Interactive Demo", type="primary", use_container_width=True):
+        st.switch_page("pages/Interactive_Demo.py")
+    
+    st.markdown("""
+    In the demo you can:
     - Test with your own announcement text
     - Upload PDF announcements
     - Try pre-loaded sample scenarios
     
     Experience how AI can streamline your M&A research workflow!
     """)
-    
-    st.info("� **Navigate to 'Interactive Demo' using the sidebar to get started**")
     
     # Footer
     st.markdown("---")
