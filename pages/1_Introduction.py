@@ -7,6 +7,8 @@ Date: November 25, 2025
 """
 
 import streamlit as st
+import os
+from pathlib import Path
 
 st.set_page_config(
     page_title="M&A Transaction Classifier",
@@ -70,12 +72,19 @@ st.header("🖼️ Platform Features")
 
 # Display screenshot
 try:
-    st.image("../Screenshot 2025-11-25 at 1.10.43 PM.png", 
-             caption="M&A Classifier Dashboard", 
-             use_container_width=True)
-    st.markdown("")  # Add spacing
+    # Get the directory of the current file and go up one level
+    current_dir = Path(__file__).parent.parent
+    image_path = current_dir / "Screenshot 2025-11-25 at 1.10.43 PM.png"
+    
+    if image_path.exists():
+        st.image(str(image_path), 
+                 caption="M&A Classifier Dashboard", 
+                 use_container_width=True)
+        st.markdown("")  # Add spacing
+    else:
+        st.warning(f"Screenshot not available (looking for: {image_path})")
 except Exception as e:
-    st.warning("Screenshot not available")
+    st.warning(f"Screenshot not available: {str(e)}")
 
 col1, col2 = st.columns(2)
 
