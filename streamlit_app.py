@@ -1,182 +1,15 @@
 """
-Streamlit Cloud Frontend for M&A Classifier
-Connects to AWS Lambda/Bedrock Backend via API Gateway
+M&A Transaction Classifier - Introduction Page
+Overview, problem statement, solution, and platform features
 
 Author: Alex Chen
 Date: November 25, 2025
 """
 
 import streamlit as st
-import requests
-import json
-import base64
-from typing import Dict, Optional
 
 # ============================================================
-# CONFIGURATION
-# ============================================================
-
-# API endpoint - will be set via Streamlit secrets in production
-API_ENDPOINT = st.secrets.get("API_ENDPOINT", "https://b6svh4pxaw2nr5pr3ndcbnhche0pbtcl.lambda-url.us-east-1.on.aws/")
-
-# ============================================================
-# SAMPLE ANNOUNCEMENTS
-# ============================================================
-
-SAMPLE_ANNOUNCEMENTS = [
-    {
-        "title": "KKR Acquisition - Large PE Deal",
-        "text": """KKR & Co. Inc. announces the acquisition of 80% stake in ABC Technology Ltd 
-        for a total consideration of USD 200 million. The transaction represents a strategic 
-        investment in the Southeast Asian technology sector. Goldman Sachs is acting as 
-        financial adviser to KKR. The acquisition is expected to complete in Q1 2026."""
-    },
-    {
-        "title": "Company XYZ - Quarterly Results (Should Reject)",
-        "text": """Company XYZ Limited announces its unaudited financial results for Q3 2025. 
-        Revenue increased 15% year-over-year to $50 million. Net profit was $8 million, 
-        up from $6 million in the prior year quarter. The Board is pleased with the results."""
-    },
-    {
-        "title": "Property Sale Announcement (Should Reject)",
-        "text": """ABC Corporation announces the disposal of its commercial property located at 
-        123 Main Street for a consideration of $12 million. The property sale is part of 
-        the company's asset optimization strategy."""
-    },
-    {
-        "title": "Strategic Investment - Mid-Size Deal",
-        "text": """DEF Ltd announces a proposed strategic investment to acquire 65% of the issued 
-        share capital of XYZ Pte Ltd for SGD 85 million in cash. The acquisition will expand 
-        DEF's presence in the Asian market. HSBC is advising on the transaction."""
-    },
-    {
-        "title": "Small Deal - Below Threshold (Should Reject)",
-        "text": """Startup Inc. announces the acquisition of Tech Co. for a total consideration 
-        of USD 3 million. The acquisition will strengthen Startup's product capabilities."""
-    }
-]
-
-# ============================================================
-# API FUNCTIONS
-# ============================================================
-
-def classify_text(title: str, text: str) -> Optional[Dict]:
-    """Call Lambda backend to classify announcement text"""
-    try:
-        response = requests.post(
-            API_ENDPOINT,
-            json={
-                "title": title,
-                "text": text
-            },
-            headers={
-                "Content-Type": "application/json"
-            },
-            timeout=35  # Lambda timeout is 30s
-        )
-        
-        if response.status_code == 200:
-            return response.json()
-        else:
-            st.error(f"API Error: {response.status_code}")
-            st.error(response.text)
-            return None
-            
-    except requests.exceptions.Timeout:
-        st.error("Request timed out. The document may be too complex.")
-        return None
-    except Exception as e:
-        st.error(f"API call failed: {str(e)}")
-        return None
-
-
-def classify_pdf(title: str, pdf_file) -> Optional[Dict]:
-    """Call Lambda backend to classify PDF file"""
-    try:
-        # Read PDF and encode to base64
-        pdf_bytes = pdf_file.read()
-        pdf_base64 = base64.b64encode(pdf_bytes).decode('utf-8')
-        
-        # Reset file pointer for potential re-use
-        pdf_file.seek(0)
-        
-        response = requests.post(
-            API_ENDPOINT,
-            json={
-                "title": title,
-                "pdf_base64": pdf_base64
-            },
-            headers={
-                "Content-Type": "application/json"
-            },
-            timeout=35
-        )
-        
-        if response.status_code == 200:
-            return response.json()
-        else:
-            st.error(f"API Error: {response.status_code}")
-            st.error(response.text)
-            return None
-            
-    except requests.exceptions.Timeout:
-        st.error("Request timed out. The PDF may be too large or complex.")
-        return None
-    except Exception as e:
-        st.error(f"PDF processing failed: {str(e)}")
-        return None
-
-
-# ============================================================
-# UI COMPONENTS
-# ============================================================
-
-def render_result(result: Dict):
-    """Render classification result"""
-    
-    if result.get("qualified"):
-        st.success("✅ **M&A Transaction Detected**")
-        
-        col1, col2 = st.columns(2)
-        
-        with col1:
-            confidence = result.get("confidence", 0)
-            st.metric("Confidence", f"{confidence:.0%}")
-        
-        with col2:
-            theme = result.get("theme", "N/A")
-            st.metric("Transaction Type", theme)
-        
-        # Show reasoning if available
-        reasoning = result.get("reasoning")
-        if reasoning:
-            st.info(f"**Analysis**: {reasoning}")
-        
-        # Show processing stage
-        stage = result.get("stage", "unknown")
-        bedrock_called = result.get("bedrock_called", False)
-        
-        if bedrock_called:
-            st.caption(f"🤖 AWS Bedrock Claude used (Stage: {stage})")
-        else:
-            st.caption(f"⚡ Pre-filter/Rule-based classification (Stage: {stage})")
-    
-    else:
-        st.warning("❌ **Not an M&A Transaction**")
-        
-        reason = result.get("reason", "Does not meet M&A criteria")
-        st.info(f"**Reason**: {reason}")
-        
-        filter_name = result.get("filter")
-        if filter_name:
-            st.caption(f"🔍 Filtered by: {filter_name}")
-        
-        stage = result.get("stage", "unknown")
-        st.caption(f"Processing stage: {stage}")
-
-
-# ============================================================
-# MAIN APP
+# MAIN PAGE
 # ============================================================
 
 def main():
@@ -187,206 +20,116 @@ def main():
     )
     
     st.title("🔍 M&A Transaction Classifier")
-    st.markdown("**Powered by AWS Lambda + Bedrock Claude**")
+    st.markdown("**AI-Powered Deal Flow Intelligence**")
     
     st.markdown("---")
     
-    # Sidebar - Information
-    with st.sidebar:
-        st.header("ℹ️ About")
-        st.markdown("""
-        This tool classifies corporate announcements as M&A transactions or not.
-        
-        **Processing Flow**:
-        1. Pre-filters (60-70% rejected)
-        2. Feature extraction
-        3. Rule-based decisions
-        4. AI fallback (Bedrock Claude)
-        
-        **Qualifies as M&A**:
+    # Problem Statement
+    st.header("📊 Problem Statement")
+    st.markdown("""
+    Corporate announcements flood the market daily, making it challenging for:
+    - **Investment professionals** to identify genuine M&A opportunities
+    - **Market analysts** to track deal flow in real-time
+    - **Corporate development teams** to monitor competitive M&A activity
+    - **News aggregators** to filter relevant transactions
+    
+    **The Challenge**: Manually reviewing hundreds of announcements daily is time-consuming 
+    and prone to missing critical deals hidden in complex corporate language.
+    """)
+    
+    st.markdown("---")
+    
+    # Solution
+    st.header("💡 Solution")
+    st.markdown("""
+    Our AI-powered classifier automatically analyzes corporate announcements and identifies 
+    genuine M&A transactions with **95%+ accuracy**, processing each announcement in under 3 seconds.
+    
+    **How It Works**:
+    1. **Smart Pre-filters** - Reject 60-70% of non-M&A announcements instantly
+    2. **Feature Extraction** - Parse deal size, parties, transaction type
+    3. **Rule-based Logic** - Apply domain expertise for clear-cut cases
+    4. **AI Fallback** - AWS Bedrock Claude handles edge cases
+    
+    **Technology Stack**:
+    - ⚡ **AWS Lambda** - Serverless compute
+    - 🤖 **Bedrock Claude 3 Haiku** - Advanced AI reasoning
+    - 📊 **Hybrid Approach** - Rules + AI for optimal accuracy
+    - 🔒 **Secure & Scalable** - Enterprise-grade AWS infrastructure
+    """)
+    
+    st.markdown("---")
+    
+    # Screenshots section
+    st.header("🖼️ Platform Features")
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.markdown("**📧 Email Notifications**")
+        st.info("""
+        Get instant alerts when new M&A transactions are detected:
+        - Daily digest of qualified deals
+        - Deal details: parties, size, type
+        - Direct links to announcements
+        - Customizable filters by sector/size
+        """)
+        # Placeholder for screenshot
+        st.caption("_Screenshot: Email notification feature available in full platform_")
+    
+    with col2:
+        st.markdown("**📈 Live Dashboard**")
+        st.info("""
+        Monitor M&A activity in real-time:
+        - Visual deal pipeline
+        - Historical trends & analytics
+        - Sector breakdown
+        - Export to Excel/CSV
+        """)
+        # Placeholder for screenshot
+        st.caption("_Screenshot: Dashboard feature available in full platform_")
+    
+    st.markdown("---")
+    
+    # What Qualifies
+    st.header("✅ Classification Criteria")
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.markdown("**Qualifies as M&A**:")
+        st.success("""
         - Acquisitions, mergers, takeovers
         - Strategic investments >$5M
         - Change of control transactions
-        - Joint ventures
-        
-        **Does NOT qualify**:
-        - Financial results
+        - Joint ventures with equity stakes
+        - Asset acquisitions (substantial)
+        """)
+    
+    with col2:
+        st.markdown("**Does NOT qualify**:")
+        st.warning("""
+        - Financial results/earnings
         - Property transactions
-        - Debt issuance
+        - Debt/bond issuance
         - Small deals (<$5M)
-        - Procedural updates
-        """)
-        
-        st.markdown("---")
-        st.caption("Backend: AWS Lambda + Bedrock")
-        st.caption("Response time: 0.5-3 seconds")
-    
-    # Main content
-    tab1, tab2, tab3, tab4 = st.tabs(["🏠 Introduction", "📝 Text Input", "📄 PDF Upload", "📚 Try Samples"])
-    
-    # Tab 1: Introduction
-    with tab1:
-        st.header("Welcome to M&A Transaction Classifier")
-        
-        # Problem Statement
-        st.subheader("📊 Problem Statement")
-        st.markdown("""
-        Corporate announcements flood the market daily, making it challenging for:
-        - **Investment professionals** to identify genuine M&A opportunities
-        - **Market analysts** to track deal flow in real-time
-        - **Corporate development teams** to monitor competitive M&A activity
-        - **News aggregators** to filter relevant transactions
-        
-        **The Challenge**: Manually reviewing hundreds of announcements daily is time-consuming 
-        and prone to missing critical deals hidden in complex corporate language.
-        """)
-        
-        st.markdown("---")
-        
-        # Solution
-        st.subheader("💡 Solution")
-        st.markdown("""
-        Our AI-powered classifier automatically analyzes corporate announcements and identifies 
-        genuine M&A transactions with **95%+ accuracy**, processing each announcement in under 3 seconds.
-        
-        **How It Works**:
-        1. **Smart Pre-filters** - Reject 60-70% of non-M&A announcements instantly
-        2. **Feature Extraction** - Parse deal size, parties, transaction type
-        3. **Rule-based Logic** - Apply domain expertise for clear-cut cases
-        4. **AI Fallback** - AWS Bedrock Claude handles edge cases
-        
-        **Technology Stack**:
-        - ⚡ **AWS Lambda** - Serverless compute
-        - 🤖 **Bedrock Claude 3 Haiku** - Advanced AI reasoning
-        - 📊 **Hybrid Approach** - Rules + AI for optimal accuracy
-        - 🔒 **Secure & Scalable** - Enterprise-grade AWS infrastructure
-        """)
-        
-        st.markdown("---")
-        
-        # Screenshots section
-        st.subheader("🖼️ Platform Features")
-        
-        col1, col2 = st.columns(2)
-        
-        with col1:
-            st.markdown("**📧 Email Notifications**")
-            st.info("""
-            Get instant alerts when new M&A transactions are detected:
-            - Daily digest of qualified deals
-            - Deal details: parties, size, type
-            - Direct links to announcements
-            - Customizable filters by sector/size
-            """)
-            # Placeholder for screenshot
-            st.caption("_Screenshot: Email notification feature available in full platform_")
-        
-        with col2:
-            st.markdown("**📈 Live Dashboard**")
-            st.info("""
-            Monitor M&A activity in real-time:
-            - Visual deal pipeline
-            - Historical trends & analytics
-            - Sector breakdown
-            - Export to Excel/CSV
-            """)
-            # Placeholder for screenshot
-            st.caption("_Screenshot: Dashboard feature available in full platform_")
-        
-        st.markdown("---")
-        
-        # Call to action
-        st.subheader("🚀 Try It Now")
-        st.markdown("""
-        Test the classifier using the tabs above:
-        - **Text Input**: Paste announcement text
-        - **PDF Upload**: Upload announcement PDFs
-        - **Try Samples**: See pre-loaded examples
-        
-        Experience how AI can streamline your M&A research workflow!
+        - Procedural/corporate updates
         """)
     
-    # Tab 2: Text Input
-    with tab2:
-        st.subheader("Enter Announcement Text")
-        
-        title_text = st.text_input(
-            "Announcement Title",
-            placeholder="e.g., ABC Corp - Proposed Acquisition of XYZ Ltd"
-        )
-        
-        text_input = st.text_area(
-            "Announcement Text",
-            height=300,
-            placeholder="Paste the full announcement text here..."
-        )
-        
-        if st.button("🔍 Classify Text", type="primary", key="classify_text"):
-            if not title_text or not text_input:
-                st.error("Please provide both title and text")
-            else:
-                with st.spinner("Analyzing announcement... (may take 2-5 seconds)"):
-                    result = classify_text(title_text, text_input)
-                
-                if result:
-                    st.markdown("---")
-                    render_result(result)
+    st.markdown("---")
     
-    # Tab 2: PDF Upload
-    with tab2:
-        st.subheader("Upload PDF Announcement")
-        
-        title_pdf = st.text_input(
-            "Announcement Title",
-            placeholder="e.g., ABC Corp - Proposed Acquisition",
-            key="pdf_title"
-        )
-        
-        uploaded_file = st.file_uploader(
-            "Choose a PDF file",
-            type=['pdf'],
-            help="Upload a corporate announcement PDF (max 7 MB)"
-        )
-        
-        if uploaded_file:
-            st.info(f"📄 File uploaded: {uploaded_file.name} ({uploaded_file.size / 1024:.1f} KB)")
-        
-        if st.button("🔍 Classify PDF", type="primary", key="classify_pdf"):
-            if not title_pdf:
-                st.error("Please provide an announcement title")
-            elif not uploaded_file:
-                st.error("Please upload a PDF file")
-            else:
-                with st.spinner("Extracting text from PDF and analyzing... (may take 3-7 seconds)"):
-                    result = classify_pdf(title_pdf, uploaded_file)
-                
-                if result:
-                    st.markdown("---")
-                    render_result(result)
+    # Call to action
+    st.header("� Try It Now")
+    st.markdown("""
+    Ready to experience the classifier? Use the **Interactive Demo** in the sidebar to:
+    - Test with your own announcement text
+    - Upload PDF announcements
+    - Try pre-loaded sample scenarios
     
-    # Tab 4: Try Samples
-    with tab4:
-        st.subheader("Try Sample Announcements")
-        st.markdown("Select a pre-loaded sample to see how the classifier works:")
-        
-        sample = st.selectbox(
-            "Choose a sample announcement",
-            options=range(len(SAMPLE_ANNOUNCEMENTS)),
-            format_func=lambda i: SAMPLE_ANNOUNCEMENTS[i]["title"]
-        )
-        
-        selected = SAMPLE_ANNOUNCEMENTS[sample]
-        
-        st.text_input("Title", value=selected["title"], disabled=True)
-        st.text_area("Text", value=selected["text"], height=200, disabled=True)
-        
-        if st.button("🔍 Classify Sample", type="primary", key="classify_sample"):
-            with st.spinner("Analyzing announcement... (may take 2-5 seconds)"):
-                result = classify_text(selected["title"], selected["text"])
-            
-            if result:
-                st.markdown("---")
-                render_result(result)
+    Experience how AI can streamline your M&A research workflow!
+    """)
+    
+    st.info("� **Navigate to 'Interactive Demo' using the sidebar to get started**")
     
     # Footer
     st.markdown("---")
