@@ -10,7 +10,7 @@ import streamlit as st
 
 def main():
     st.set_page_config(
-        page_title="M&A Transaction Classifier",
+        page_title="Introduction",
         page_icon="🔍",
         layout="wide"
     )
@@ -68,6 +68,13 @@ def main():
     
     # Screenshots section
     st.header("🖼️ Platform Features")
+    
+    # Display screenshot
+    st.image("Screenshot 2025-11-25 at 1.10.43 PM.png", 
+             caption="M&A Classifier Dashboard", 
+             use_container_width=True)
+    
+    st.markdown("")  # Add spacing
     
     col1, col2 = st.columns(2)
     
