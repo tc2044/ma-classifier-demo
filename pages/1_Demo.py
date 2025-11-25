@@ -250,10 +250,34 @@ def main():
         st.caption("Response time: 0.5-3 seconds")
     
     # Main content
-    tab1, tab2, tab3 = st.tabs(["📝 Text Input", "📄 PDF Upload", "📚 Try Samples"])
+    tab1, tab2, tab3 = st.tabs(["� Try Samples", "�📝 Text Input", "📄 PDF Upload"])
     
-    # Tab 1: Text Input
+    # Tab 1: Try Samples
     with tab1:
+        st.subheader("Try Sample Announcements")
+        st.markdown("Select a pre-loaded sample to see how the classifier works:")
+        
+        sample = st.selectbox(
+            "Choose a sample announcement",
+            options=range(len(SAMPLE_ANNOUNCEMENTS)),
+            format_func=lambda i: SAMPLE_ANNOUNCEMENTS[i]["title"]
+        )
+        
+        selected = SAMPLE_ANNOUNCEMENTS[sample]
+        
+        st.text_input("Title", value=selected["title"], disabled=True)
+        st.text_area("Text", value=selected["text"], height=200, disabled=True)
+        
+        if st.button("🔍 Classify Sample", type="primary", key="classify_sample"):
+            with st.spinner("Analyzing announcement... (may take 2-5 seconds)"):
+                result = classify_text(selected["title"], selected["text"])
+            
+            if result:
+                st.markdown("---")
+                render_result(result)
+    
+    # Tab 2: Text Input
+    with tab2:
         st.subheader("Enter Announcement Text")
         
         title_text = st.text_input(
@@ -278,8 +302,8 @@ def main():
                     st.markdown("---")
                     render_result(result)
     
-    # Tab 2: PDF Upload
-    with tab2:
+    # Tab 3: PDF Upload
+    with tab3:
         st.subheader("Upload PDF Announcement")
         
         title_pdf = st.text_input(
@@ -309,30 +333,6 @@ def main():
                 if result:
                     st.markdown("---")
                     render_result(result)
-    
-    # Tab 3: Try Samples
-    with tab3:
-        st.subheader("Try Sample Announcements")
-        st.markdown("Select a pre-loaded sample to see how the classifier works:")
-        
-        sample = st.selectbox(
-            "Choose a sample announcement",
-            options=range(len(SAMPLE_ANNOUNCEMENTS)),
-            format_func=lambda i: SAMPLE_ANNOUNCEMENTS[i]["title"]
-        )
-        
-        selected = SAMPLE_ANNOUNCEMENTS[sample]
-        
-        st.text_input("Title", value=selected["title"], disabled=True)
-        st.text_area("Text", value=selected["text"], height=200, disabled=True)
-        
-        if st.button("🔍 Classify Sample", type="primary", key="classify_sample"):
-            with st.spinner("Analyzing announcement... (may take 2-5 seconds)"):
-                result = classify_text(selected["title"], selected["text"])
-            
-            if result:
-                st.markdown("---")
-                render_result(result)
     
     # Footer
     st.markdown("---")
