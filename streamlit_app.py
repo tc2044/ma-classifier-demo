@@ -10,12 +10,13 @@ import streamlit as st
 
 st.set_page_config(
     page_title="M&A Transaction Classifier",
-    page_icon="�",
-    layout="wide"
+    page_icon="🔍",
+    layout="wide",
+    initial_sidebar_state="expanded"
 )
 
 # Redirect message
-st.info("👈 Please use the **Introduction** or **Demo** pages in the sidebar to get started!")
+st.info("👈 Please select **Introduction** or **Demo** from the sidebar to get started!")
 
-st.markdown("### � M&A Transaction Classifier")
-st.markdown("Navigate using the sidebar to explore the platform.")
+st.markdown("### 🔍 M&A Transaction Classifier")
+st.markdown("This app provides AI-powered classification of M&A transactions using AWS Lambda and Bedrock Claude.")
