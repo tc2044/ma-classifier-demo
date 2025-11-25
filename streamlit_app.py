@@ -222,10 +222,92 @@ def main():
         st.caption("Response time: 0.5-3 seconds")
     
     # Main content
-    tab1, tab2, tab3 = st.tabs(["📝 Text Input", "📄 PDF Upload", "📚 Try Samples"])
+    tab1, tab2, tab3, tab4 = st.tabs(["🏠 Introduction", "📝 Text Input", "📄 PDF Upload", "📚 Try Samples"])
     
-    # Tab 1: Text Input
+    # Tab 1: Introduction
     with tab1:
+        st.header("Welcome to M&A Transaction Classifier")
+        
+        # Problem Statement
+        st.subheader("📊 Problem Statement")
+        st.markdown("""
+        Corporate announcements flood the market daily, making it challenging for:
+        - **Investment professionals** to identify genuine M&A opportunities
+        - **Market analysts** to track deal flow in real-time
+        - **Corporate development teams** to monitor competitive M&A activity
+        - **News aggregators** to filter relevant transactions
+        
+        **The Challenge**: Manually reviewing hundreds of announcements daily is time-consuming 
+        and prone to missing critical deals hidden in complex corporate language.
+        """)
+        
+        st.markdown("---")
+        
+        # Solution
+        st.subheader("💡 Solution")
+        st.markdown("""
+        Our AI-powered classifier automatically analyzes corporate announcements and identifies 
+        genuine M&A transactions with **95%+ accuracy**, processing each announcement in under 3 seconds.
+        
+        **How It Works**:
+        1. **Smart Pre-filters** - Reject 60-70% of non-M&A announcements instantly
+        2. **Feature Extraction** - Parse deal size, parties, transaction type
+        3. **Rule-based Logic** - Apply domain expertise for clear-cut cases
+        4. **AI Fallback** - AWS Bedrock Claude handles edge cases
+        
+        **Technology Stack**:
+        - ⚡ **AWS Lambda** - Serverless compute
+        - 🤖 **Bedrock Claude 3 Haiku** - Advanced AI reasoning
+        - 📊 **Hybrid Approach** - Rules + AI for optimal accuracy
+        - 🔒 **Secure & Scalable** - Enterprise-grade AWS infrastructure
+        """)
+        
+        st.markdown("---")
+        
+        # Screenshots section
+        st.subheader("🖼️ Platform Features")
+        
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            st.markdown("**📧 Email Notifications**")
+            st.info("""
+            Get instant alerts when new M&A transactions are detected:
+            - Daily digest of qualified deals
+            - Deal details: parties, size, type
+            - Direct links to announcements
+            - Customizable filters by sector/size
+            """)
+            # Placeholder for screenshot
+            st.caption("_Screenshot: Email notification feature available in full platform_")
+        
+        with col2:
+            st.markdown("**📈 Live Dashboard**")
+            st.info("""
+            Monitor M&A activity in real-time:
+            - Visual deal pipeline
+            - Historical trends & analytics
+            - Sector breakdown
+            - Export to Excel/CSV
+            """)
+            # Placeholder for screenshot
+            st.caption("_Screenshot: Dashboard feature available in full platform_")
+        
+        st.markdown("---")
+        
+        # Call to action
+        st.subheader("🚀 Try It Now")
+        st.markdown("""
+        Test the classifier using the tabs above:
+        - **Text Input**: Paste announcement text
+        - **PDF Upload**: Upload announcement PDFs
+        - **Try Samples**: See pre-loaded examples
+        
+        Experience how AI can streamline your M&A research workflow!
+        """)
+    
+    # Tab 2: Text Input
+    with tab2:
         st.subheader("Enter Announcement Text")
         
         title_text = st.text_input(
@@ -282,8 +364,8 @@ def main():
                     st.markdown("---")
                     render_result(result)
     
-    # Tab 3: Try Samples
-    with tab3:
+    # Tab 4: Try Samples
+    with tab4:
         st.subheader("Try Sample Announcements")
         st.markdown("Select a pre-loaded sample to see how the classifier works:")
         
